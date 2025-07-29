@@ -233,6 +233,23 @@ def prepare_chart_data(data):
                         'category': category_info['category'],
                         'sales': float(category_info['sales']) if category_info['sales'] else 0
                     })
+        # Check if this is the top products by location structure
+        elif 'location' in item and 'top_products' in item:
+            location = item['location']
+            location_total = float(item.get('location_total', 0))
+            products = item.get('top_products', [])
+            
+            # Extract each product as a separate row for charting
+            for product_info in products[:10]:  # Limit to top 10 for readability
+                if isinstance(product_info, dict):
+                    chart_data.append({
+                        'location': location,
+                        'location_total': location_total,
+                        'product_name': product_info.get('product_name', 'Unknown'),
+                        'product_category': product_info.get('product_category', 'Unknown'),
+                        'revenue': float(product_info.get('revenue', 0)),
+                        'quantity': int(product_info.get('quantity', 0))
+                    })
         else:
             # For simple data structures, just flatten any nested objects
             flattened_item = {}
@@ -281,10 +298,10 @@ def generate_chart_format_with_mixtral(data, user_query):
         "reasoning": "Why this chart type is optimal for this data"
     }}
     
-    For the common product categories by location data:
-    - Use "category" for x-axis (shows different product categories)  
-    - Use "sales" for y-axis (numeric sales values)
-    - Use "location" for color grouping (different colors per location)
+    For the common data patterns:
+    - Product categories by location: Use "category" (x-axis), "sales" (y-axis), "location" (color)
+    - Top products by location: Use "product_name" (x-axis), "revenue" (y-axis), "location" (color)  
+    - Location performance: Use "location" (x-axis), "location_total" (y-axis)
     - Bar chart is often best for categorical comparisons
     
     Consider:
@@ -384,13 +401,15 @@ def process_nested_data(data):
         
         for key, value in item.items():
             if isinstance(value, list) and len(value) > 0:
-                # Handle arrays of objects (like top_categories)
+                # Handle arrays of objects (like top_categories, top_products)
                 if isinstance(value[0], dict):
                     # Convert array of objects to a readable string
                     formatted_items = []
                     for i, obj in enumerate(value[:5]):  # Show top 5 items
                         if 'category' in obj and 'sales' in obj:
                             formatted_items.append(f"{i+1}. {obj['category']}: {obj['sales']:,.0f}")
+                        elif 'product_name' in obj and 'revenue' in obj:
+                            formatted_items.append(f"{i+1}. {obj['product_name']}: {obj['revenue']:,.0f}")
                         elif 'category' in obj:
                             formatted_items.append(f"{i+1}. {obj['category']}")
                         else:

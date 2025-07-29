@@ -688,6 +688,10 @@ class OptimizedCollectionBuilder:
                 'primary': ['produk', 'product', 'barang', 'item'],
                 'secondary': ['kategori', 'category', 'per produk', 'by product']
             },
+            'product_performance_nested': {
+                'primary': ['produk terbanyak', 'top product', 'product terbesar', 'best product'],
+                'secondary': ['product performance', 'produk performance', 'terbanyak', 'terbesar', 'nested product']
+            },
             'sales_by_payment_method': {
                 'primary': ['payment', 'pembayaran', 'bayar'],
                 'secondary': ['cash', 'qris', 'card', 'metode', 'method']
@@ -719,10 +723,20 @@ class OptimizedCollectionBuilder:
         has_month = any(keyword in query_lower for keyword in month_keywords)
         has_product = any(keyword in query_lower for keyword in product_keywords)
         
+        # Special handling for complex product analysis queries
+        performance_keywords = ['terbanyak', 'terbesar', 'performance', 'top', 'best']
+        has_performance = any(keyword in query_lower for keyword in performance_keywords)
+        
+        # Special case: top products from top locations (complex nested analysis)
+        if has_location and has_product and has_performance:
+            if 'product_performance_nested' in scores:
+                scores['product_performance_nested'] += 20  # Highest priority for complex analysis
+            else:
+                scores['product_performance_nested'] = 20
         # Special case: product categories by location by month
-        if has_location and has_month and has_product:
+        elif has_location and has_month and has_product:
             if 'sales_by_location_month' in scores:
-                scores['sales_by_location_month'] += 15  # Highest bonus for triple combination
+                scores['sales_by_location_month'] += 15  # High bonus for triple combination
             else:
                 scores['sales_by_location_month'] = 15
         # If both location and month keywords are present, heavily favor sales_by_location_month

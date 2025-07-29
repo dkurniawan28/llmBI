@@ -188,6 +188,38 @@ class AIService:
                     {"$sort": {"location": 1}}
                 ]
         
+        # Template for top products from top locations using product_performance_nested
+        if collection_name == "product_performance_nested":
+            if ("product" in command_lower or "produk" in command_lower) and \
+               ("location" in command_lower or "lokasi" in command_lower) and \
+               ("terbanyak" in command_lower or "terbesar" in command_lower or "top" in command_lower):
+                return [
+                    {"$sort": {"total_revenue": -1}},
+                    {"$limit": 100},  # Get top 100 products first
+                    {"$unwind": "$performance_breakdown"},
+                    {"$group": {
+                        "_id": "$performance_breakdown.location",
+                        "location_total": {"$sum": "$performance_breakdown.revenue"},
+                        "products": {
+                            "$push": {
+                                "product_name": "$product_name",
+                                "product_category": "$product_category", 
+                                "revenue": "$performance_breakdown.revenue",
+                                "quantity": "$performance_breakdown.quantity"
+                            }
+                        }
+                    }},
+                    {"$sort": {"location_total": -1}},
+                    {"$limit": 10},  # Top 10 locations by revenue
+                    {"$project": {
+                        "location": "$_id",
+                        "location_total": 1,
+                        "top_products": {"$slice": [{"$sortArray": {"input": "$products", "sortBy": {"revenue": -1}}}, 10]},
+                        "_id": 0
+                    }},
+                    {"$sort": {"location_total": -1}}
+                ]
+        
         return None
 
     def generate_pipeline_with_claude(self, translated_command, collection_schema, collection_name="transaction_sale"):
