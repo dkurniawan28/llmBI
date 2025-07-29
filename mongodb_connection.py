@@ -14,7 +14,7 @@ class MongoDBSSHConnection:
         self.db_name = 'esteh'
         self.tunnel = None
         self.client = None
-        OPENROUTER_API_KEY="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"
+        OPENROUTER_API_KEY="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"
     def connect(self):
         try:
             # Create SSH tunnel

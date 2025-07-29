@@ -10,7 +10,7 @@ class OptimizedCollectionBuilder:
     def __init__(self):
         self.mongo_conn = MongoDBSSHConnection()
         self.db = None
-        self.OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY') or "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"
+        self.OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY') or "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"
         
         # Define collection builders
         self.collection_builders = {
