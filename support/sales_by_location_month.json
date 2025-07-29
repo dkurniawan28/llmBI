@@ -82,8 +82,26 @@
   ],
   "sample_queries": [
     "sales per location per month",
-    "location performance by month",
+    "location performance by month", 
     "monthly location comparison",
-    "location trends"
+    "location trends",
+    "top product categories by location",
+    "kategori produk per lokasi",
+    "product categories for specific month"
+  ],
+  "pipeline_examples": [
+    {
+      "description": "Get top product categories by location for a specific month",
+      "query": "top product categories by location for June",
+      "pipeline": [
+        {"$match": {"month": 6}},
+        {"$unwind": "$product_categories"},
+        {"$group": {"_id": {"location": "$location_name", "category": "$product_categories"}, "total_sales": {"$first": "$total_sales"}}},
+        {"$sort": {"total_sales": -1}},
+        {"$group": {"_id": "$_id.location", "top_categories": {"$push": {"category": "$_id.category", "sales": "$total_sales"}}}},
+        {"$project": {"location": "$_id", "top_categories": {"$slice": ["$top_categories", 10]}, "_id": 0}},
+        {"$sort": {"location": 1}}
+      ]
+    }
   ]
 }

@@ -151,8 +151,52 @@ class AIService:
             logger.error(f"Error translating with Mixtral: {e}")
             return user_command  # Fallback to original
     
+    def get_pipeline_template(self, translated_command, collection_name):
+        """Get predefined pipeline templates for common queries"""
+        command_lower = translated_command.lower()
+        
+        # Template for product categories by location for June using sales_by_location_month
+        if collection_name == "sales_by_location_month":
+            if ("product" in command_lower or "category" in command_lower or "kategori" in command_lower) and \
+               ("location" in command_lower or "lokasi" in command_lower) and \
+               ("june" in command_lower or "juni" in command_lower):
+                return [
+                    {"$match": {"month": 6}},
+                    {"$unwind": "$product_categories"},
+                    {"$group": {
+                        "_id": {
+                            "location": "$location_name", 
+                            "category": "$product_categories"
+                        }, 
+                        "total_sales": {"$first": "$total_sales"}
+                    }},
+                    {"$sort": {"total_sales": -1}},
+                    {"$group": {
+                        "_id": "$_id.location", 
+                        "top_categories": {
+                            "$push": {
+                                "category": "$_id.category", 
+                                "sales": "$total_sales"
+                            }
+                        }
+                    }},
+                    {"$project": {
+                        "location": "$_id", 
+                        "top_categories": {"$slice": ["$top_categories", 10]}, 
+                        "_id": 0
+                    }},
+                    {"$sort": {"location": 1}}
+                ]
+        
+        return None
+
     def generate_pipeline_with_claude(self, translated_command, collection_schema, collection_name="transaction_sale"):
         """Generate MongoDB aggregation pipeline using Claude"""
+        
+        # Check for predefined pipeline templates
+        pipeline_template = self.get_pipeline_template(translated_command, collection_name)
+        if pipeline_template:
+            return pipeline_template
         
         # Determine if this is an optimized collection
         is_optimized = collection_name != "transaction_sales"

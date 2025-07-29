@@ -199,7 +199,7 @@ class OptimizedCollectionBuilder:
                         "$concat": [
                             {"$toString": "$_id.year"},
                             "-",
-                            {"$toString": {"$add": [100, "$_id.month"]}}
+                            {"$toString": {"$add": [100, "$_id.month"]}},
                         ]
                     },
                     "total_sales": {"$round": ["$total_sales", 2]},
@@ -385,7 +385,14 @@ class OptimizedCollectionBuilder:
                     "locations": {"$addToSet": "$Location Name"},
                     "months": {"$addToSet": "$extracted_month"},
                     "years": {"$addToSet": "$extracted_year"},
-                    "sales_dates": {"$push": "$Sales Date"}
+                    "sales_dates": {"$push": "$Sales Date"},
+                    "monthly_sales": {
+                        "$push": {
+                            "month": "$extracted_month",
+                            "year": "$extracted_year", 
+                            "sales": "$total_numeric"
+                        }
+                    }
                 }
             },
             {
@@ -395,7 +402,7 @@ class OptimizedCollectionBuilder:
                     "total_sales": {"$round": ["$total_sales", 2]},
                     "total_transactions": 1,
                     "average_transaction": {"$round": [{"$divide": ["$total_sales", "$total_transactions"]}, 2]},
-                    "percentage_of_total": {"$literal": 0},  # Will calculate this after aggregation
+                    "percentage_of_total": 0,  # Will calculate this after aggregation
                     "locations_used": "$locations",
                     "months_active": "$months", 
                     "years_active": "$years",
@@ -483,7 +490,7 @@ class OptimizedCollectionBuilder:
                 }
             },
             {"$sort": {"total_sales": -1}}
-        ])
+        ]
         
         return self.execute_pipeline_and_save('sales_summary_nested', pipeline)
     
@@ -681,8 +688,8 @@ class OptimizedCollectionBuilder:
                 'secondary': ['trend', 'tahun', 'year', 'per bulan', 'by month']
             },
             'sales_by_location_month': {
-                'primary': ['per lokasi per bulan', 'location month', 'lokasi bulan', 'by location by month', 'kategori per lokasi'],
-                'secondary': ['toko bulan', 'store month', 'lokasi per bulan', 'location and month', 'product categories', 'kategori produk per lokasi']
+                'primary': ['per lokasi per bulan', 'location month', 'lokasi bulan', 'by location by month'],
+                'secondary': ['toko bulan', 'store month', 'lokasi per bulan', 'location and month']
             },
             'sales_by_product': {
                 'primary': ['produk', 'product', 'barang', 'item'],
@@ -709,28 +716,6 @@ class OptimizedCollectionBuilder:
             
             if score > 0:
                 scores[collection] = score
-        
-        # Special handling for combination queries
-        location_keywords = ['lokasi', 'location', 'toko', 'store', 'cabang', 'branch']
-        month_keywords = ['bulan', 'month', 'bulanan', 'monthly', 'per bulan', 'by month', 'dikelompokan']
-        product_keywords = ['kategori', 'category', 'produk', 'product', 'barang', 'item']
-        
-        has_location = any(keyword in query_lower for keyword in location_keywords)
-        has_month = any(keyword in query_lower for keyword in month_keywords)
-        has_product = any(keyword in query_lower for keyword in product_keywords)
-        
-        # Special case: product categories by location by month
-        if has_location and has_month and has_product:
-            if 'sales_by_location_month' in scores:
-                scores['sales_by_location_month'] += 15  # Highest bonus for triple combination
-            else:
-                scores['sales_by_location_month'] = 15
-        # If both location and month keywords are present, heavily favor sales_by_location_month
-        elif has_location and has_month:
-            if 'sales_by_location_month' in scores:
-                scores['sales_by_location_month'] += 10  # Big bonus for combination queries
-            else:
-                scores['sales_by_location_month'] = 10
         
         # Return best match with tie-breaking preference for more specific collections
         if scores:

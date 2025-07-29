@@ -1,0 +1,1898 @@
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+ * Serving Flask app 'api_server'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.100.35:5002
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales by location" or "Show sales per location"*
+
+(*Assuming that "penjualan" refers to "sales".)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$group': {'_id': '$Location Name', 'total_sales': {'$sum': {'$toDouble': '$Total'}}, 'transaction_count': {'$sum': 1}, 'average_transaction': {'$avg': {'$toDouble': '$Total'}}}}, {'$project': {'location': '$_id', 'total_sales': {'$round': ['$total_sales', 2]}, 'transaction_count': 1, 'average_transaction': {'$round': ['$average_transaction', 2]}, '_id': 0}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 7.07s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 19:27:53] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+📊 Using original collection: transaction_sale
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 52738
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales by location" or "Show sales per location"*
+
+(*Assuming that "penjualan" refers to "sales".)'
+✅ Final translation: '"Display sales by location" or "Show sales per location"*
+
+(*Assuming that "penjualan" refers to "sales".)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$group": {
+      "_id": "$Location Name",
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Total"
+        }
+      },
+      "transaction_count": {
+        "$sum": 1
+      },
+      "average_transaction": {
+        "$avg": {
+          "$toDouble": "$Total"
+        }
+      }
+    }
+  },
+  {
+    "$project": {
+      "location": "$_id",
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "transaction_count": 1,
+      "average_transaction": {
+        "$round": [
+          "$average_transaction",
+          2
+        ]
+      },
+      "_id": 0
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'transaction_sale' has 80 documents
+✅ Month/Year columns already exist
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "transaction_count": 17,
+    "location": "Bandung Kopo",
+    "total_sales": 663544.0,
+    "average_transaction": 39032.0
+}
+ 2. {
+    "transaction_count": 20,
+    "location": "Surabaya Timur",
+    "total_sales": 621648.0,
+    "average_transaction": 31082.4
+}
+ 3. {
+    "transaction_count": 17,
+    "location": "Yogyakarta",
+    "total_sales": 594315.0,
+    "average_transaction": 34959.71
+}
+ 4. {
+    "transaction_count": 16,
+    "location": "Jakarta Pusat",
+    "total_sales": 461482.0,
+    "average_transaction": 28842.62
+}
+ 5. {
+    "transaction_count": 10,
+    "location": "Medan Plaza",
+    "total_sales": 371266.0,
+    "average_transaction": 37126.6
+}
+============================================================
+⏱️ Total execution time: 7.07s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 1984 characters
+📝 Preview: After analyzing the MongoDB aggregation results for sales per location, several key findings and trends emerge. First, there is a strong positive correlation between total sales and the number of tran...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary slightly depending on the context, but the meaning will remain the same.)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$group': {'_id': '$Location Name', 'total_sales': {'$sum': {'$toDouble': '$Total'}}, 'transaction_count': {'$sum': 1}, 'average_transaction': {'$avg': {'$toDouble': '$Total'}}}}, {'$project': {'location': '$_id', 'total_sales': {'$round': ['$total_sales', 2]}, 'transaction_count': 1, 'average_transaction': {'$round': ['$average_transaction', 2]}, '_id': 0}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 6.85s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 20:29:49] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Display sales by location.
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$group': {'_id': '$Location Name', 'total_sales': {'$sum': {'$toDouble': '$Total'}}, 'transaction_count': {'$sum': 1}, 'total_items_sold': {'$sum': '$Product qty'}, 'average_transaction': {'$avg': {'$toDouble': '$Total'}}}}, {'$project': {'location': '$_id', 'total_sales': {'$round': ['$total_sales', 2]}, 'transaction_count': 1, 'total_items_sold': 1, 'average_transaction': {'$round': ['$average_transaction', 2]}, '_id': 0}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 7.05s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 20:30:20] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: analisis payment method
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "analysis of payment method"
+INFO:__main__:Generating pipeline with Claude...
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 61247
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary slightly depending on the context, but the meaning will remain the same.)'
+✅ Final translation: '"Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary slightly depending on the context, but the meaning will remain the same.)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$group": {
+      "_id": "$Location Name",
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Total"
+        }
+      },
+      "transaction_count": {
+        "$sum": 1
+      },
+      "average_transaction": {
+        "$avg": {
+          "$toDouble": "$Total"
+        }
+      }
+    }
+  },
+  {
+    "$project": {
+      "location": "$_id",
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "transaction_count": 1,
+      "average_transaction": {
+        "$round": [
+          "$average_transaction",
+          2
+        ]
+      },
+      "_id": 0
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 5 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "transaction_count": 5,
+    "location": null,
+    "total_sales": 0,
+    "average_transaction": null
+}
+============================================================
+⏱️ Total execution time: 6.85s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 1703 characters
+📝 Preview: Based on the MongoDB aggregation results provided, here are the key findings and trends:
+
+1. The data indicates that there is a location with zero sales, as evidenced by the "total_sales" field of 0 a...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 61449
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Display sales by location.'
+✅ Final translation: 'Display sales by location.'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$group": {
+      "_id": "$Location Name",
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Total"
+        }
+      },
+      "transaction_count": {
+        "$sum": 1
+      },
+      "total_items_sold": {
+        "$sum": "$Product qty"
+      },
+      "average_transaction": {
+        "$avg": {
+          "$toDouble": "$Total"
+        }
+      }
+    }
+  },
+  {
+    "$project": {
+      "location": "$_id",
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "transaction_count": 1,
+      "total_items_sold": 1,
+      "average_transaction": {
+        "$round": [
+          "$average_transaction",
+          2
+        ]
+      },
+      "_id": 0
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 5 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "transaction_count": 5,
+    "total_items_sold": 0,
+    "location": null,
+    "total_sales": 0,
+    "average_transaction": null
+}
+============================================================
+⏱️ Total execution time: 7.05s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2451 characters
+📝 Preview: Based on the MongoDB aggregation results, here are the key findings and business insights:
+
+1. Key Findings and Trends: The data indicates that there was at least one location with zero transactions, ...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='analisis payment method', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_payment_method (confidence: 5)
+🔄 Switching to optimized collection: sales_by_payment_method
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 61616
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"analysis of payment method"'
+✅ Final translation: '"analysis of payment method"'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$group": {
+      "_id": "$Payment Method",
+      "total_transactions": {
+        "$sum": 1
+      },
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Total"
+        }
+      },
+      "average_transaction": {
+        "$avg": {
+          "$toDouble": "$Total"
+        }
+      }
+    }
+  },
+  {
+    "$project": {
+      "payment_method": "$_id",
+      "total_transactions": 1,
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "average_transaction": {
+        "$round": [
+          "$average_transaction",
+          2
+        ]
+      },
+      "percentage_of_transactions": {
+        "$round": [
+          {
+            "$multiply": [
+              {
+                "$divide": [
+                  "$total_transactions",
+                  {
+                    "$sum": "$total_transactions"
+                  }
+                ]
+              },
+              100
+            ]
+          },
+          2
+        ]
+      }
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]INFO:__main__:Generated pipeline: [{'$group': {'_id': '$Payment Method', 'total_transactions': {'$sum': 1}, 'total_sales': {'$sum': {'$toDouble': '$Total'}}, 'average_transaction': {'$avg': {'$toDouble': '$Total'}}}}, {'$project': {'payment_method': '$_id', 'total_transactions': 1, 'total_sales': {'$round': ['$total_sales', 2]}, 'average_transaction': {'$round': ['$average_transaction', 2]}, 'percentage_of_transactions': {'$round': [{'$multiply': [{'$divide': ['$total_transactions', {'$sum': '$total_transactions'}]}, 100]}, 2]}}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 8.56s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 20:30:45] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: penjualan per lokasi per bulan
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Sales by location per June (or: per month of June)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$match': {'month': 6}}, {'$group': {'_id': '$Location Name', 'total_sales': {'$sum': {'$toDouble': '$Net Sales'}}, 'transaction_count': {'$sum': 1}, 'items_sold': {'$sum': '$Product qty'}}}, {'$project': {'location': '$_id', 'total_sales': {'$round': ['$total_sales', 2]}, 'transaction_count': 1, 'items_sold': 1, 'average_transaction': {'$round': [{'$divide': ['$total_sales', '$transaction_count']}, 2]}}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 8.47s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 20:31:14] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_payment_method' has 3 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "_id": null,
+    "total_transactions": 3,
+    "payment_method": null,
+    "total_sales": 0,
+    "average_transaction": null,
+    "percentage_of_transactions": 100.0
+}
+============================================================
+⏱️ Total execution time: 8.56s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 1950 characters
+📝 Preview: Based on the MongoDB aggregation results, here are the key findings and business insights:
+
+1. Key Findings and Trends: The results indicate that there were a total of 3 transactions, contributing to ...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='penjualan per lokasi per bulan', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location_month (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location_month
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 61820
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Sales by location per June (or: per month of June)'
+✅ Final translation: 'Sales by location per June (or: per month of June)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$match": {
+      "month": 6
+    }
+  },
+  {
+    "$group": {
+      "_id": "$Location Name",
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Net Sales"
+        }
+      },
+      "transaction_count": {
+        "$sum": 1
+      },
+      "items_sold": {
+        "$sum": "$Product qty"
+      }
+    }
+  },
+  {
+    "$project": {
+      "location": "$_id",
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "transaction_count": 1,
+      "items_sold": 1,
+      "average_transaction": {
+        "$round": [
+          {
+            "$divide": [
+              "$total_sales",
+              "$transaction_count"
+            ]
+          },
+          2
+        ]
+      }
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location_month' has 26 documents
+✅ Month/Year columns already exist
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "_id": null,
+    "transaction_count": 5,
+    "items_sold": 0,
+    "location": null,
+    "total_sales": 0,
+    "average_transaction": 0.0
+}
+============================================================
+⏱️ Total execution time: 8.47s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2407 characters
+📝 Preview: Based on the MongoDB aggregation results, here are the key findings and insights:
+
+1. Key Findings and Trends: The data set provided is a summary of sales transactions for the month of June. However, ...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales by location."
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$group': {'_id': '$Location Name', 'total_sales': {'$sum': {'$toDouble': '$Total'}}, 'transaction_count': {'$sum': 1}, 'average_transaction': {'$avg': {'$toDouble': '$Total'}}}}, {'$project': {'location': '$_id', 'total_sales': {'$round': ['$total_sales', 2]}, 'transaction_count': 1, 'average_transaction': {'$round': ['$average_transaction', 2]}, '_id': 0}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 6.46s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 20:35:45] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 63351
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales by location."'
+✅ Final translation: '"Display sales by location."'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$group": {
+      "_id": "$Location Name",
+      "total_sales": {
+        "$sum": {
+          "$toDouble": "$Total"
+        }
+      },
+      "transaction_count": {
+        "$sum": 1
+      },
+      "average_transaction": {
+        "$avg": {
+          "$toDouble": "$Total"
+        }
+      }
+    }
+  },
+  {
+    "$project": {
+      "location": "$_id",
+      "total_sales": {
+        "$round": [
+          "$total_sales",
+          2
+        ]
+      },
+      "transaction_count": 1,
+      "average_transaction": {
+        "$round": [
+          "$average_transaction",
+          2
+        ]
+      },
+      "_id": 0
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 5 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "transaction_count": 5,
+    "location": null,
+    "total_sales": 0,
+    "average_transaction": null
+}
+============================================================
+⏱️ Total execution time: 6.46s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2458 characters
+📝 Preview: Berikut adalah analisis bisnis yang telah dilakukan terhadap hasil agregasi MongoDB yang Anda berikan:
+
+1. Temuan utama dan tren:
+Dari hasil agregasi MongoDB, terlihat bahwa terdapat satu lokasi denga...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary depending on the context and the desired level of formality.)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$project': {'location_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_transaction': 1}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 6.36s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:08:18] "[35m[1mPOST /aggregate/execute HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 1478, in __call__
+    return self.wsgi_app(environ, start_response)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 1458, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 671, in error_router
+    return original_handler(f)
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 669, in error_router
+    return self.handle_error(e)
+           ~~~~~~~~~~~~~~~~~^^^
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 671, in error_router
+    return original_handler(f)
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 669, in error_router
+    return self.handle_error(e)
+           ~~~~~~~~~~~~~~~~~^^^
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 406, in wrapper
+    return self.make_response(data, code, headers=headers)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/api.py", line 430, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+  File "/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/flask_restx/representations.py", line 22, in output_json
+    dumped = dumps(data, **settings) + "\n"
+             ~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.5/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Object of type ObjectId is not JSON serializable
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 51218
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary depending on the context and the desired level of formality.)'
+✅ Final translation: '"Display sales by location" or "Show sales per location"*
+
+(*Note: The exact translation may vary depending on the context and the desired level of formality.)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_location
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$project": {
+      "location_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_transaction": 1
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 5 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "_id": "68876c17d735b561047b6ded",
+    "total_transactions": 17,
+    "location_name": "Bandung Kopo",
+    "total_sales": 663544.0,
+    "average_transaction": 39032.0
+}
+ 2. {
+    "_id": "68876c17d735b561047b6dee",
+    "total_transactions": 20,
+    "location_name": "Surabaya Timur",
+    "total_sales": 621648.0,
+    "average_transaction": 31082.4
+}
+ 3. {
+    "_id": "68876c17d735b561047b6def",
+    "total_transactions": 17,
+    "location_name": "Yogyakarta",
+    "total_sales": 594315.0,
+    "average_transaction": 34959.71
+}
+ 4. {
+    "_id": "68876c17d735b561047b6df0",
+    "total_transactions": 16,
+    "location_name": "Jakarta Pusat",
+    "total_sales": 461482.0,
+    "average_transaction": 28842.62
+}
+ 5. {
+    "_id": "68876c17d735b561047b6df1",
+    "total_transactions": 10,
+    "location_name": "Medan Plaza",
+    "total_sales": 371266.0,
+    "average_transaction": 37126.6
+}
+============================================================
+⏱️ Total execution time: 6.36s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2553 characters
+📝 Preview: Estimasi Perdagangan per Lokasi: Analisis Bisnis Informatif
+
+Diberikan hasil dari analisis agregasi MongoDB yang menunjukkan penjualan per lokasi, kami dapat melakukan analisis bisnis yang komprehensi...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Display sales by location.
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$project': {'location_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_transaction': 1}}, {'$sort': {'total_sales': -1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 5.76s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:08:50] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/mongodb_connection.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sale', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 51479
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Display sales by location.'
+✅ Final translation: 'Display sales by location.'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_location
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$project": {
+      "location_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_transaction": 1
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 5 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "_id": "68876c17d735b561047b6ded",
+    "total_transactions": 17,
+    "location_name": "Bandung Kopo",
+    "total_sales": 663544.0,
+    "average_transaction": 39032.0
+}
+ 2. {
+    "_id": "68876c17d735b561047b6dee",
+    "total_transactions": 20,
+    "location_name": "Surabaya Timur",
+    "total_sales": 621648.0,
+    "average_transaction": 31082.4
+}
+ 3. {
+    "_id": "68876c17d735b561047b6def",
+    "total_transactions": 17,
+    "location_name": "Yogyakarta",
+    "total_sales": 594315.0,
+    "average_transaction": 34959.71
+}
+ 4. {
+    "_id": "68876c17d735b561047b6df0",
+    "total_transactions": 16,
+    "location_name": "Jakarta Pusat",
+    "total_sales": 461482.0,
+    "average_transaction": 28842.62
+}
+ 5. {
+    "_id": "68876c17d735b561047b6df1",
+    "total_transactions": 10,
+    "location_name": "Medan Plaza",
+    "total_sales": 371266.0,
+    "average_transaction": 37126.6
+}
+============================================================
+⏱️ Total execution time: 5.76s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2282 characters
+📝 Preview: Selamat dengan ini saya akan melakukan analisis hasil agregasi MongoDB yang telah anda sediakan. Berikut adalah analisis bisnis yang komprehensif:
+
+1. Temuan utama dan tren: Dari hasil agregasi MongoD...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/api_server.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per lokasi
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales by location" or "Show sales per location".
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$project': {'location_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_transaction': 1}}, {'$sort': {'total_sales': -1}}, {'$limit': 5}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 6.58s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:23:48] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per lokasi', collection='transaction_sales', limit=5
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 57283
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales by location" or "Show sales per location".'
+✅ Final translation: '"Display sales by location" or "Show sales per location".'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_location
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$project": {
+      "location_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_transaction": 1
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➕ Added limit: 5
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location' has 705 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "_id": "688787d4ff067070b96f075c",
+    "total_transactions": 9648,
+    "location_name": "Kebun 0491 Antapani Bandung",
+    "total_sales": 206890657618.0,
+    "average_transaction": 21443890.71
+}
+ 2. {
+    "_id": "688787d4ff067070b96f075d",
+    "total_transactions": 11000,
+    "location_name": "Kebun 0050 Sukahati",
+    "total_sales": 30193007434.88,
+    "average_transaction": 2744818.86
+}
+ 3. {
+    "_id": "688787d4ff067070b96f075e",
+    "total_transactions": 10931,
+    "location_name": "Kebun 0096 Tegal",
+    "total_sales": 29241371379.34,
+    "average_transaction": 2675086.58
+}
+ 4. {
+    "_id": "688787d4ff067070b96f075f",
+    "total_transactions": 10245,
+    "location_name": "Kebun 0069 Buaran",
+    "total_sales": 22865377873.64,
+    "average_transaction": 2231857.28
+}
+ 5. {
+    "_id": "688787d4ff067070b96f0760",
+    "total_transactions": 15719,
+    "location_name": "Kebun 0053 Cikampek, Kotabaru",
+    "total_sales": 22619197915.8,
+    "average_transaction": 1438971.81
+}
+============================================================
+⏱️ Total execution time: 6.58s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2572 characters
+📝 Preview: Estimasi dan analisis bisnis Anda:
+
+Temuan Utama dan Tren:
+Dasar data yang Anda berikan menunjukkan penjualan per lokasi dari beberapa cabang Kebun yang paling signifikan. Tren yang nyata adalah bahwa...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: tampilkan penjualan per produk
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display sales per product" or "Show sales by product"
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$project': {'product_name': 1, 'total_revenue': 1, 'total_quantity_sold': 1, '_id': 0}}, {'$sort': {'total_revenue': -1}}, {'$limit': 5}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 5.55s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:29:13] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: tampilkan penjualan per bulan
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Display sales by month.
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$sort': {'year': 1, 'month': 1}}, {'$project': {'_id': 0, 'period': 1, 'month_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_daily_sales': 1}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 6.54s with 2 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:29:58] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: penjualan per lokasi per bulan
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Sales by location per June (or: per month of June)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$match': {'month': 6}}, {'$project': {'location_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_transaction': 1, 'year': 1}}, {'$sort': {'total_sales': -1}}, {'$limit': 10}]
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per produk', collection='transaction_sales', limit=5
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_product (confidence: 5)
+🔄 Switching to optimized collection: sales_by_product
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 59352
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display sales per product" or "Show sales by product"'
+✅ Final translation: '"Display sales per product" or "Show sales by product"'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_product
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$project": {
+      "product_name": 1,
+      "total_revenue": 1,
+      "total_quantity_sold": 1,
+      "_id": 0
+    }
+  },
+  {
+    "$sort": {
+      "total_revenue": -1
+    }
+  }
+]
+➕ Added limit: 5
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_product' has 703 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "total_quantity_sold": 391244,
+    "product_name": "Esteh Susu Nusantara (L)",
+    "total_revenue": 6132318241.9
+}
+ 2. {
+    "total_quantity_sold": 346889,
+    "product_name": "Esteh Melati (L)",
+    "total_revenue": 4234109991.59
+}
+ 3. {
+    "total_quantity_sold": 341881,
+    "product_name": "Esteh Original (L)",
+    "total_revenue": 3969938176.79
+}
+ 4. {
+    "total_quantity_sold": 191356,
+    "product_name": "Thai Tea (L)",
+    "total_revenue": 3218414578.66
+}
+ 5. {
+    "total_quantity_sold": 294441,
+    "product_name": "Esteh Susu Nusantara (M)",
+    "total_revenue": 2949879533.37
+}
+============================================================
+⏱️ Total execution time: 5.55s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2440 characters
+📝 Preview: Berikut adalah analisis bisnis yang komprehensif berdasarkan hasil agregasi MongoDB yang telah disediakan:
+
+1. Temuan utama dan tren: Dari hasil agregasi, terlihat bahwa produk "Esteh Susu Nusantara (...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan per bulan', collection='transaction_sales', limit=None
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_month (confidence: 5)
+🔄 Switching to optimized collection: sales_by_month
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 59691
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Display sales by month.'
+✅ Final translation: 'Display sales by month.'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_month
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$sort": {
+      "year": 1,
+      "month": 1
+    }
+  },
+  {
+    "$project": {
+      "_id": 0,
+      "period": 1,
+      "month_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_daily_sales": 1
+    }
+  }
+]
+➡️ No limit specified - returning all results
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_month' has 2 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 2 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "total_transactions": 3143374,
+    "month_name": null,
+    "period": null,
+    "total_sales": 740076551201.96,
+    "average_daily_sales": 24669218373.4
+}
+ 2. {
+    "total_transactions": 500000,
+    "month_name": "April",
+    "period": "2025-104",
+    "total_sales": 22317866979.22,
+    "average_daily_sales": 743928899.31
+}
+============================================================
+⏱️ Total execution time: 6.54s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 235 characters
+📝 Preview: Dalam analisis penjualan per bulan menggunakan data agregasi MongoDB, berikut adalah wawasan bisnis yang komprehensif:
+
+1. Temuan utama dan tren: Dari hasil agregasi, terlihat ada tren penjualan yang ...
+📤 RESPONSE PREPARED: 2 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='penjualan per lokasi per bulan', collection='transaction_sales', limit=10
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location_month (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location_month
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 59845
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Sales by location per June (or: per month of June)'
+✅ Final translation: 'Sales by location per June (or: per month of June)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_location_month
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$match": {
+      "month": 6
+    }
+  },
+  {
+    "$project": {
+      "location_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_transaction": 1,
+      "year": 1
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➕ Added limit: 10
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location_month' has 955 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 13.50s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:30:29] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 0 results
+🔍 No results found. Analyzing existing data for alternatives...
+🧠 Step 1: Analyzing existing data structure...
+📊 Data summary: {'locations': [], 'months': [4], 'years': [2025], 'categories': [], 'payment_methods': [], 'total_documents': 955, 'earliest_date': None, 'latest_date': None}
+🤖 Step 2: Asking Claude for alternative solution...
+🔄 Alternative pipeline: [
+  {
+    "$group": {
+      "_id": {
+        "month": {
+          "$month": "$transaction_date"
+        },
+        "location": "$location"
+      },
+      "total_sales": {
+        "$sum": "$total_amount"
+      }
+    }
+  },
+  {
+    "$project": {
+      "_id": 0,
+      "month": "$_id.month",
+      "location": "$_id.location",
+      "total_sales": 1,
+      "note": {
+        "$concat": [
+          "Showing sales for month 4 (April) 2025 as requested June data is not available. ",
+          "Location data will be shown if present in transactions."
+        ]
+      }
+    }
+  },
+  {
+    "$sort": {
+      "month": 1,
+      "location": 1
+    }
+  }
+]
+✅ Found alternative solution: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "total_sales": 0,
+    "month": null,
+    "note": "Showing sales for month 4 (April) 2025 as requested June data is not available. Location data will be shown if present in transactions."
+}
+============================================================
+⏱️ Total execution time: 13.50s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 162 characters
+📝 Preview: Penulisan analisis bisnis:
+
+Wawasan Bisnis:
+
+Berikut ini adalah analisis hasil agregasi MongoDB untuk permintaan pengguna mengenai penjualan per lokasi per bulan....
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:__main__:Processing command: penjualan per lokasi per bulan
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: Sales by location per month (June can be specified if context requires it)
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$match': {'month': 6}}, {'$project': {'location_name': 1, 'total_sales': 1, 'total_transactions': 1, 'average_transaction': 1, 'year': 1}}, {'$sort': {'total_sales': -1}}, {'$limit': 5}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 12.78s with 1 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:32:28] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:__main__:Processing command: tampilkan penjualan produk top 5
+INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.2p1)
+INFO:paramiko.transport:Authentication (publickey) successful!
+INFO:__main__:Translating command with Mixtral...
+INFO:__main__:Translated command: "Display top 5 product sales"
+INFO:__main__:Generating pipeline with Claude...
+INFO:__main__:Generated pipeline: [{'$sort': {'total_revenue': -1}}, {'$limit': 5}, {'$project': {'product_name': 1, 'total_revenue': 1, 'total_quantity_sold': 1, '_id': 0}}]
+INFO:__main__:Executing aggregation...
+INFO:__main__:Aggregation completed in 8.80s with 5 results
+INFO:werkzeug:127.0.0.1 - - [28/Jul/2025 21:34:30] "POST /aggregate/execute HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+🔑 AIService initialized with API key: sk-or-v1-3f48f2...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='penjualan per lokasi per bulan', collection='transaction_sales', limit=5
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_location_month (confidence: 5)
+🔄 Switching to optimized collection: sales_by_location_month
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 60621
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: 'Sales by location per month (June can be specified if context requires it)'
+✅ Final translation: 'Sales by location per month (June can be specified if context requires it)'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_location_month
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$match": {
+      "month": 6
+    }
+  },
+  {
+    "$project": {
+      "location_name": 1,
+      "total_sales": 1,
+      "total_transactions": 1,
+      "average_transaction": 1,
+      "year": 1
+    }
+  },
+  {
+    "$sort": {
+      "total_sales": -1
+    }
+  }
+]
+➕ Added limit: 5
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_location_month' has 955 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 0 results
+🔍 No results found. Analyzing existing data for alternatives...
+🧠 Step 1: Analyzing existing data structure...
+📊 Data summary: {'locations': [], 'months': [4], 'years': [2025], 'categories': [], 'payment_methods': [], 'total_documents': 955, 'earliest_date': None, 'latest_date': None}
+🤖 Step 2: Asking Claude for alternative solution...
+🔄 Alternative pipeline: [
+  {
+    "$match": {
+      "year": 2025,
+      "month": 4
+    }
+  },
+  {
+    "$group": {
+      "_id": {
+        "year": "$year",
+        "month": "$month"
+      },
+      "count": {
+        "$sum": 1
+      }
+    }
+  },
+  {
+    "$project": {
+      "_id": 0,
+      "year": "$_id.year",
+      "month": "$_id.month",
+      "total_transactions": "$count",
+      "note": {
+        "$concat": [
+          "Showing total transactions for available month (April 2025) since location data is not present in the collection and only April 2025 data exists"
+        ]
+      }
+    }
+  }
+]
+✅ Found alternative solution: 1 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "year": 2025,
+    "month": 4,
+    "total_transactions": 250,
+    "note": "Showing total transactions for available month (April 2025) since location data is not present in the collection and only April 2025 data exists"
+}
+============================================================
+⏱️ Total execution time: 12.78s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 185 characters
+📝 Preview: Penelaahan Hasil Agregasi MongoDB: Penjualan per Lokasi per Bulan
+
+Selamat malam,
+
+Sesuai dengan permintaan Anda, kami telah melakukan analisis terhadap data penjualan per bulan tahun 2...
+📤 RESPONSE PREPARED: 1 MongoDB results ready
+Disconnected from MongoDB
+🚀 STEP 0: Starting aggregate execution
+🔧 STEP 1: Initializing services...
+✅ AI service initialized
+✅ MongoDB service initialized
+📝 STEP 2: Parsing request...
+✅ Parsed: command='tampilkan penjualan produk top 5', collection='transaction_sales', limit=5
+🔍 STEP 3.5: Checking for optimized collections...
+✅ Loaded schema: sales_by_payment_method
+✅ Loaded schema: sales_by_location_month
+✅ Loaded schema: sales_by_location
+✅ Loaded schema: sales_by_product
+✅ Loaded schema: sales_by_month
+💡 Found optimized collection: sales_by_product (confidence: 3)
+🔄 Switching to optimized collection: sales_by_product
+🔌 STEP 3: Connecting to MongoDB...
+Successfully connected to MongoDB via SSH tunnel on port 61302
+✅ MongoDB connected successfully
+🌐 STEP 4: Translating command with Mixtral...
+✅ Translation successful: '"Display top 5 product sales"'
+✅ Final translation: '"Display top 5 product sales"'
+📋 STEP 5: Loading schema...
+✅ Schema loaded successfully for sales_by_product
+🤖 STEP 6: Generating pipeline with Claude...
+✅ Pipeline generated: [
+  {
+    "$sort": {
+      "total_revenue": -1
+    }
+  },
+  {
+    "$limit": 5
+  },
+  {
+    "$project": {
+      "product_name": 1,
+      "total_revenue": 1,
+      "total_quantity_sold": 1,
+      "_id": 0
+    }
+  }
+]
+📅 STEP 7: Checking month/year columns...
+📊 Collection 'sales_by_product' has 703 documents
+🔄 Month/Year columns not found. Adding them...
+⚠️  Warning: Could not update month/year columns: PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Failed to parse number '' in $convert with no onError value: No digits", 'code': 241, 'codeName': 'ConversionFailure'}
+⚡ STEP 8: Executing aggregation...
+✅ Aggregation executed successfully: 5 results
+
+============================================================
+📊 AGGREGATION RESULTS:
+============================================================
+ 1. {
+    "total_quantity_sold": 391244,
+    "product_name": "Esteh Susu Nusantara (L)",
+    "total_revenue": 6132318241.9
+}
+ 2. {
+    "total_quantity_sold": 346889,
+    "product_name": "Esteh Melati (L)",
+    "total_revenue": 4234109991.59
+}
+ 3. {
+    "total_quantity_sold": 341881,
+    "product_name": "Esteh Original (L)",
+    "total_revenue": 3969938176.79
+}
+ 4. {
+    "total_quantity_sold": 191356,
+    "product_name": "Thai Tea (L)",
+    "total_revenue": 3218414578.66
+}
+ 5. {
+    "total_quantity_sold": 294441,
+    "product_name": "Esteh Susu Nusantara (M)",
+    "total_revenue": 2949879533.37
+}
+============================================================
+⏱️ Total execution time: 8.80s
+📊 STEP 9: Generating analytics description with Mixtral...
+✅ Analytics description generated: 2553 characters
+📝 Preview: Selamat datang, stakeholder bisnis! Berikut ini adalah analisis bisnis yang komprehensif berdasarkan hasil agregasi MongoDB yang menunjukkan penjualan produk teratas.
+
+1. Temuan utama dan tren:
+Dari h...
+📤 RESPONSE PREPARED: 5 MongoDB results ready
+Disconnected from MongoDB
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+INFO:werkzeug: * Detected change in '/Users/dedykurniawan/Documents/BI & Analitics/collection_builder.py', reloading
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
+INFO:werkzeug: * Restarting with stat
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/pkey.py:100: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "cipher": algorithms.TripleDES,
+/Users/dedykurniawan/Documents/BI & Analitics/bi/lib/python3.13/site-packages/paramiko/transport.py:259: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+  "class": algorithms.TripleDES,
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 909-607-209
+🚀 Starting Transaction Sale Aggregate API
+📚 Swagger docs available at: http://localhost:5002/docs
+🏥 Health check at: http://localhost:5002/health
