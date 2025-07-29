@@ -212,6 +212,40 @@ st.markdown("""
 API_BASE_URL = "http://localhost:5002"
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY') or "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"
 
+def prepare_chart_data(data):
+    """Convert nested data structures to chart-friendly format"""
+    if not data:
+        return pd.DataFrame()
+    
+    chart_data = []
+    
+    for item in data:
+        # Check if this is the product categories by location structure
+        if 'location' in item and 'top_categories' in item:
+            location = item['location']
+            categories = item.get('top_categories', [])
+            
+            # Extract each category as a separate row for charting
+            for category_info in categories[:10]:  # Limit to top 10 for readability
+                if isinstance(category_info, dict) and 'category' in category_info and 'sales' in category_info:
+                    chart_data.append({
+                        'location': location,
+                        'category': category_info['category'],
+                        'sales': float(category_info['sales']) if category_info['sales'] else 0
+                    })
+        else:
+            # For simple data structures, just flatten any nested objects
+            flattened_item = {}
+            for key, value in item.items():
+                if isinstance(value, (list, dict)):
+                    # Convert complex structures to string representation for now
+                    flattened_item[key] = str(value)
+                else:
+                    flattened_item[key] = value
+            chart_data.append(flattened_item)
+    
+    return pd.DataFrame(chart_data)
+
 def generate_chart_format_with_mixtral(data, user_query):
     """Generate optimal chart format recommendation using Mixtral"""
     headers = {
@@ -219,13 +253,23 @@ def generate_chart_format_with_mixtral(data, user_query):
         "Content-Type": "application/json"
     }
     
+    # Prepare chart-friendly data for analysis
+    chart_df = prepare_chart_data(data)
+    chart_sample = chart_df.to_dict('records')[:3] if not chart_df.empty else []
+    chart_columns = chart_df.columns.tolist() if not chart_df.empty else []
+    
     prompt = f"""
     You are a data visualization expert. Based on the following data and user query, recommend the best chart type and configuration.
     
     User Query: "{user_query}"
-    Data Sample: {json.dumps(data[:3] if data else [], indent=2)}
-    Data Structure: {list(data[0].keys()) if data else "No data"}
-    Total Records: {len(data) if data else 0}
+    Chart Data Sample: {json.dumps(chart_sample, indent=2)}
+    Available Chart Columns: {chart_columns}
+    Chart DataFrame Shape: {chart_df.shape if not chart_df.empty else "Empty"}
+    
+    IMPORTANT: The data has been preprocessed for charting:
+    - Nested structures like "top_categories" have been flattened
+    - Each category-location combination is now a separate row
+    - Numeric values like "sales" are now proper numbers for charting
     
     Analyze the data and provide recommendations in this exact JSON format:
     {{
@@ -236,6 +280,12 @@ def generate_chart_format_with_mixtral(data, user_query):
         "title": "Descriptive Chart Title",
         "reasoning": "Why this chart type is optimal for this data"
     }}
+    
+    For the common product categories by location data:
+    - Use "category" for x-axis (shows different product categories)  
+    - Use "sales" for y-axis (numeric sales values)
+    - Use "location" for color grouping (different colors per location)
+    - Bar chart is often best for categorical comparisons
     
     Consider:
     - Time series data → line/area charts
@@ -368,8 +418,14 @@ def create_chart(data, chart_config):
     """Create chart based on Mixtral's recommendation"""
     if not data or not chart_config:
         return None
+    
+    # Use chart-friendly data preparation
+    df = prepare_chart_data(data)
+    
+    if df.empty:
+        st.warning("No data available for charting")
+        return None
         
-    df = pd.DataFrame(data)
     chart_type = chart_config.get('chart_type', 'bar')
     x_col = chart_config.get('x_axis')
     y_col = chart_config.get('y_axis') 
@@ -417,6 +473,14 @@ def create_chart(data, chart_config):
         st.error(f"Chart creation error: {e}")
         st.error(f"Available columns: {available_cols}")
         st.error(f"Trying to use - X: {x_col}, Y: {y_col}, Color: {color_col}")
+        
+        # Show debug info
+        with st.expander("🔍 Debug: Chart Data Structure"):
+            st.write("DataFrame shape:", df.shape)
+            st.write("DataFrame columns:", df.columns.tolist())
+            st.write("DataFrame dtypes:", df.dtypes.tolist())
+            st.dataframe(df.head())
+        
         return None
 
 # ========== SIDEBAR ==========

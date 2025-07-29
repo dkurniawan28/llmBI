@@ -74,6 +74,7 @@ User Query → Streamlit Frontend → Flask API → Claude (Pipeline Gen) → Mo
 ✅ **Decimal Format**: Proper handling of Indonesian number formatting  
 ✅ **Collection Routing**: Smart selection of optimal collections for queries  
 ✅ **Nested Data Display**: Enhanced frontend display of complex objects  
+✅ **Chart Generation**: Fixed chart creation from nested data structures  
 
 ## 🔗 Repository
 
