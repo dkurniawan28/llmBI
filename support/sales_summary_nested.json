@@ -1,0 +1,128 @@
+{
+  "collection_name": "sales_summary_nested",
+  "description": "Hierarchical sales summary data with monthly breakdowns as nested sub-documents per location",
+  "purpose": "Optimized nested collection for location-based sales analysis with monthly granularity",
+  "source": "Aggregated from transaction_sales collection with nested structure",
+  "update_frequency": "Real-time when transaction_sales changes",
+  "performance_benefit": "Reduces document count from millions to hundreds while maintaining monthly breakdown access",
+  "schema": [
+    {
+      "field": "_id", 
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "location_name",
+      "type": "String",
+      "description": "Name of the location/store",
+      "index": true
+    },
+    {
+      "field": "total_sales",
+      "type": "Double",
+      "description": "Total sales amount across all time periods for this location"
+    },
+    {
+      "field": "total_transactions",
+      "type": "Int32",
+      "description": "Total number of transactions across all time periods"
+    },
+    {
+      "field": "average_transaction",
+      "type": "Double",
+      "description": "Average transaction value for this location"
+    },
+    {
+      "field": "active_months",
+      "type": "Int32",
+      "description": "Number of months with sales activity"
+    },
+    {
+      "field": "monthly_breakdown",
+      "type": "Array",
+      "description": "Nested array of monthly sales data with detailed breakdowns",
+      "sub_schema": [
+        {
+          "field": "year",
+          "type": "Int32",
+          "description": "Year of sales"
+        },
+        {
+          "field": "month",
+          "type": "Int32", 
+          "description": "Month of sales (1-12)"
+        },
+        {
+          "field": "period",
+          "type": "String",
+          "description": "Year-month period (YYYY-M format)"
+        },
+        {
+          "field": "sales",
+          "type": "Double",
+          "description": "Sales amount for this month"
+        },
+        {
+          "field": "transactions",
+          "type": "Int32",
+          "description": "Number of transactions for this month"
+        },
+        {
+          "field": "products_sold",
+          "type": "Array",
+          "description": "List of unique products sold in this month"
+        },
+        {
+          "field": "categories",
+          "type": "Array",
+          "description": "List of product categories sold in this month"
+        },
+        {
+          "field": "payment_methods",
+          "type": "Array",
+          "description": "List of payment methods used in this month"
+        }
+      ]
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "tampilkan penjualan per lokasi per bulan",
+    "sales summary by location and month", 
+    "location performance with monthly trends",
+    "monthly breakdown by store",
+    "location sales with product details per month"
+  ],
+  "query_examples": [
+    {
+      "description": "Get sales summary for a specific location with monthly breakdown",
+      "query": "db.sales_summary_nested.findOne({location_name: 'Jakarta'}, {monthly_breakdown: 1})"
+    },
+    {
+      "description": "Find top performing locations by total sales",
+      "query": "db.sales_summary_nested.find().sort({total_sales: -1}).limit(10)"
+    },
+    {
+      "description": "Get locations active in specific month using nested array",
+      "query": "db.sales_summary_nested.find({'monthly_breakdown.period': '2024-1'})"
+    },
+    {
+      "description": "Aggregate total sales by month across all locations",
+      "query": "db.sales_summary_nested.aggregate([{$unwind: '$monthly_breakdown'}, {$group: {_id: '$monthly_breakdown.period', total: {$sum: '$monthly_breakdown.sales'}}}])"
+    },
+    {
+      "description": "Find locations selling specific product in any month",
+      "query": "db.sales_summary_nested.find({'monthly_breakdown.products_sold': 'Teh Tarik'})"
+    }
+  ],
+  "performance_notes": [
+    "Uses nested documents to reduce top-level document count from ~3.6M to ~700",
+    "Enables efficient queries for location-month combinations",
+    "Maintains detailed monthly breakdown data without separate collection joins",
+    "Optimized for location-based analysis with temporal granularity"
+  ]
+}

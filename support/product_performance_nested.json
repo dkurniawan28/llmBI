@@ -1,0 +1,141 @@
+{
+  "collection_name": "product_performance_nested",
+  "description": "Hierarchical product performance data with location and monthly breakdowns as nested sub-documents",
+  "purpose": "Optimized nested collection for complex multi-dimensional product analysis queries",
+  "source": "Aggregated from transaction_sales collection with nested structure",
+  "update_frequency": "Real-time when transaction_sales changes",
+  "performance_benefit": "Reduces document count from millions to hundreds while maintaining granular access to breakdowns",
+  "schema": [
+    {
+      "field": "_id", 
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "product_name",
+      "type": "String",
+      "description": "Name of the product",
+      "index": true
+    },
+    {
+      "field": "product_category",
+      "type": "String", 
+      "description": "Product category name",
+      "index": true
+    },
+    {
+      "field": "total_revenue",
+      "type": "Double",
+      "description": "Total revenue across all locations and time periods"
+    },
+    {
+      "field": "total_quantity",
+      "type": "Int32",
+      "description": "Total quantity sold across all locations and time periods"
+    },
+    {
+      "field": "total_transactions", 
+      "type": "Int32",
+      "description": "Total number of transactions across all locations and time periods"
+    },
+    {
+      "field": "average_price",
+      "type": "Double",
+      "description": "Average price per unit across all transactions"
+    },
+    {
+      "field": "locations_count",
+      "type": "Int32",
+      "description": "Number of unique locations selling this product"
+    },
+    {
+      "field": "months_active",
+      "type": "Int32", 
+      "description": "Number of unique months with sales activity"
+    },
+    {
+      "field": "performance_breakdown",
+      "type": "Array",
+      "description": "Nested array of performance data by location and month",
+      "sub_schema": [
+        {
+          "field": "location",
+          "type": "String",
+          "description": "Location name"
+        },
+        {
+          "field": "year",
+          "type": "Int32",
+          "description": "Year of sales"
+        },
+        {
+          "field": "month",
+          "type": "Int32", 
+          "description": "Month of sales (1-12)"
+        },
+        {
+          "field": "period",
+          "type": "String",
+          "description": "Year-month period (YYYY-M format)"
+        },
+        {
+          "field": "location_period",
+          "type": "String",
+          "description": "Location and period combined identifier"
+        },
+        {
+          "field": "revenue",
+          "type": "Double",
+          "description": "Revenue for this location and month"
+        },
+        {
+          "field": "quantity",
+          "type": "Int32",
+          "description": "Quantity sold for this location and month"
+        },
+        {
+          "field": "transactions",
+          "type": "Int32",
+          "description": "Number of transactions for this location and month"
+        }
+      ]
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "tampilkan penjualan per produk dan di group juga per bulan, jgn lupa produk per bulan",
+    "product performance by location and month",
+    "best selling products by location",
+    "monthly product trends",
+    "product revenue breakdown by location",
+    "seasonal product performance"
+  ],
+  "query_examples": [
+    {
+      "description": "Get product performance for a specific product with location breakdown",
+      "query": "db.product_performance_nested.findOne({product_name: 'Teh Tarik'}, {performance_breakdown: 1})"
+    },
+    {
+      "description": "Find top products by total revenue",
+      "query": "db.product_performance_nested.find().sort({total_revenue: -1}).limit(10)"
+    },
+    {
+      "description": "Get products active in specific location using nested array",
+      "query": "db.product_performance_nested.find({'performance_breakdown.location': 'Jakarta'})"
+    },
+    {
+      "description": "Aggregate monthly totals across all products",
+      "query": "db.product_performance_nested.aggregate([{$unwind: '$performance_breakdown'}, {$group: {_id: '$performance_breakdown.period', total: {$sum: '$performance_breakdown.revenue'}}}])"
+    }
+  ],
+  "performance_notes": [
+    "Uses nested documents to reduce top-level document count from ~3.6M to ~700",
+    "Enables efficient queries for product-location-month combinations",
+    "Maintains detailed breakdown data without separate collection joins",
+    "Optimized for multi-dimensional analysis while reducing memory usage"
+  ]
+}

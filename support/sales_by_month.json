@@ -1,0 +1,78 @@
+{
+  "collection_name": "sales_by_month",
+  "description": "Pre-aggregated sales data grouped by month and year for trend analysis",
+  "purpose": "Optimized collection for monthly/yearly trend queries",
+  "source": "Aggregated from transaction_sale collection",
+  "update_frequency": "Real-time when transaction_sale changes",
+  "schema": [
+    {
+      "field": "_id",
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "year",
+      "type": "Int32",
+      "description": "Year of sales",
+      "index": true
+    },
+    {
+      "field": "month",
+      "type": "Int32", 
+      "description": "Month of sales (1-12)",
+      "index": true
+    },
+    {
+      "field": "month_name",
+      "type": "String",
+      "description": "Month name (January, February, etc.)"
+    },
+    {
+      "field": "period",
+      "type": "String",
+      "description": "Combined period (YYYY-MM format)",
+      "index": true
+    },
+    {
+      "field": "total_sales",
+      "type": "Double",
+      "description": "Total sales amount for this month"
+    },
+    {
+      "field": "total_transactions",
+      "type": "Int32",
+      "description": "Total number of transactions"
+    },
+    {
+      "field": "average_daily_sales",
+      "type": "Double",
+      "description": "Average sales per day in month"
+    },
+    {
+      "field": "days_active",
+      "type": "Int32",
+      "description": "Number of days with sales in month"
+    },
+    {
+      "field": "locations_active",
+      "type": "Array",
+      "description": "List of locations that had sales this month"
+    },
+    {
+      "field": "top_location",
+      "type": "String",
+      "description": "Best performing location for this month"
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "monthly sales trend",
+    "sales by month",
+    "yearly comparison", 
+    "seasonal analysis"
+  ]
+}

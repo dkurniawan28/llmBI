@@ -1,0 +1,76 @@
+{
+  "collection_name": "sales_by_payment_method",
+  "description": "Pre-aggregated sales data grouped by payment method for payment analysis",
+  "purpose": "Optimized collection for payment method performance queries",
+  "source": "Aggregated from transaction_sale collection",
+  "update_frequency": "Real-time when transaction_sale changes",
+  "schema": [
+    {
+      "field": "_id", 
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "payment_method",
+      "type": "String",
+      "description": "Payment method name",
+      "index": true
+    },
+    {
+      "field": "total_sales",
+      "type": "Double", 
+      "description": "Total sales amount for this payment method"
+    },
+    {
+      "field": "total_transactions",
+      "type": "Int32",
+      "description": "Total number of transactions"
+    },
+    {
+      "field": "average_transaction",
+      "type": "Double",
+      "description": "Average transaction value"
+    },
+    {
+      "field": "percentage_of_total",
+      "type": "Double",
+      "description": "Percentage of total business volume"
+    },
+    {
+      "field": "locations_used",
+      "type": "Array",
+      "description": "List of locations using this payment method"
+    },
+    {
+      "field": "months_active",
+      "type": "Array",
+      "description": "List of months with transactions"
+    },
+    {
+      "field": "years_active",
+      "type": "Array",
+      "description": "List of years with transactions"
+    },
+    {
+      "field": "peak_usage_month",
+      "type": "String",
+      "description": "Month with highest usage"
+    },
+    {
+      "field": "last_used_date",
+      "type": "String",
+      "description": "Most recent transaction date (DD/MM/YYYY)"
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "payment method analysis",
+    "popular payment methods",
+    "payment trends",
+    "cash vs digital payments"
+  ]
+}

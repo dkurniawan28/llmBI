@@ -1,0 +1,89 @@
+{
+  "collection_name": "sales_by_location_month",
+  "description": "Pre-aggregated sales data grouped by location and month for detailed analysis",
+  "purpose": "Optimized collection for location-month combination queries",
+  "source": "Aggregated from transaction_sale collection", 
+  "update_frequency": "Real-time when transaction_sale changes",
+  "schema": [
+    {
+      "field": "_id",
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "location_name",
+      "type": "String",
+      "description": "Store location name",
+      "index": true
+    },
+    {
+      "field": "year",
+      "type": "Int32",
+      "description": "Year of sales",
+      "index": true
+    },
+    {
+      "field": "month",
+      "type": "Int32",
+      "description": "Month of sales (1-12)",
+      "index": true
+    },
+    {
+      "field": "period",
+      "type": "String", 
+      "description": "Combined period (YYYY-MM format)"
+    },
+    {
+      "field": "location_period",
+      "type": "String",
+      "description": "Combined location and period key",
+      "index": true
+    },
+    {
+      "field": "total_sales",
+      "type": "Double",
+      "description": "Total sales amount for this location-month"
+    },
+    {
+      "field": "total_transactions",
+      "type": "Int32",
+      "description": "Total number of transactions"
+    },
+    {
+      "field": "average_transaction",
+      "type": "Double",
+      "description": "Average transaction value"
+    },
+    {
+      "field": "unique_customers",
+      "type": "Int32",
+      "description": "Number of unique customers (based on phone)"
+    },
+    {
+      "field": "payment_methods",
+      "type": "Array",
+      "description": "List of payment methods used"
+    },
+    {
+      "field": "product_categories",
+      "type": "Array", 
+      "description": "List of product categories sold"
+    },
+    {
+      "field": "days_active",
+      "type": "Int32",
+      "description": "Number of days with sales"
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "sales per location per month",
+    "location performance by month",
+    "monthly location comparison",
+    "location trends"
+  ]
+}

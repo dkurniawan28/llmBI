@@ -1,0 +1,66 @@
+{
+  "collection_name": "sales_by_location",
+  "description": "Pre-aggregated sales data grouped by location for fast querying",
+  "purpose": "Optimized collection for location-based analysis queries",
+  "source": "Aggregated from transaction_sale collection",
+  "update_frequency": "Real-time when transaction_sale changes",
+  "schema": [
+    {
+      "field": "_id",
+      "type": "ObjectId",
+      "description": "MongoDB unique identifier"
+    },
+    {
+      "field": "location_name",
+      "type": "String",
+      "description": "Store location name",
+      "index": true
+    },
+    {
+      "field": "total_sales",
+      "type": "Double",
+      "description": "Total sales amount for this location"
+    },
+    {
+      "field": "total_transactions",
+      "type": "Int32", 
+      "description": "Total number of transactions"
+    },
+    {
+      "field": "average_transaction",
+      "type": "Double",
+      "description": "Average transaction value"
+    },
+    {
+      "field": "first_sale_date",
+      "type": "String",
+      "description": "First recorded sale date (DD/MM/YYYY)"
+    },
+    {
+      "field": "last_sale_date", 
+      "type": "String",
+      "description": "Most recent sale date (DD/MM/YYYY)"
+    },
+    {
+      "field": "active_months",
+      "type": "Array",
+      "description": "List of months with sales activity"
+    },
+    {
+      "field": "active_years",
+      "type": "Array", 
+      "description": "List of years with sales activity"
+    },
+    {
+      "field": "last_updated",
+      "type": "Date",
+      "description": "When this record was last updated"
+    }
+  ],
+  "sample_queries": [
+    "top performing locations",
+    "sales by location",
+    "best locations",
+    "store performance"
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "collection_name": "transaction_sales",
+  "description": "Collection utama yang berisi semua data transaksi penjualan dari sistem POS. Setiap dokumen merepresentasikan satu item produk dalam satu transaksi.",
+  "total_documents": "3,643,374",
+  "data_quality_issues": {
+    "mixed_date_formats": {
+      "field": "Sales Date",
+      "issue": "Field Sales Date memiliki format campuran - sebagian string DD/MM/YYYY dengan month/year field terisi, sebagian datetime object dengan month/year field kosong",
+      "impact": "Menyebabkan aggregation hanya menampilkan data dari records dengan month/year terisi (mayoritas April 2025)",
+      "solution": "Gunakan get_date_parsing_pipeline() untuk mengekstrak extracted_year dan extracted_month yang konsisten",
+      "status": "FIXED - Semua optimized collections sudah menggunakan date parsing pipeline"
+    },
+    "decimal_format": {
+      "fields": ["Total", "Gross Sales", "Net Sales", "Discount", "Surcharge", "Product Tax", "Total Tax", "Net Received", "Void Total"],
+      "issue": "Angka desimal menggunakan koma (,) sebagai pemisah desimal, bukan titik (.)",
+      "solution": "Gunakan $replaceAll untuk mengganti koma dengan titik sebelum $toDouble",
+      "status": "FIXED - Semua collection builders sudah menangani format ini"
+    }
+  },
+  "schema": [
+    {
+      "field": "_id",
+      "type": "ObjectId",
+      "description": "ID unik standar dari MongoDB untuk setiap dokumen item penjualan."
+    },
+    {
+        
+      "field": "Location Name",
+      "type": "String",
+      "description": "Nama cabang atau 'kebun' tempat transaksi terjadi."
+    },
+    {
+      "field": "Receipt No",
+      "type": "String",
+      "description": "Nomor struk unik untuk satu transaksi. Beberapa dokumen item bisa memiliki 'Receipt No' yang sama jika dibeli dalam satu struk."
+    },
+    {
+      "field": "Sales no",
+      "type": "String",
+      "description": "Nomor penjualan internal yang unik untuk setiap transaksi."
+    },
+    {
+      "field": "Sales Date",
+      "type": "Mixed (String | Date)",
+      "description": "Tanggal penjualan. PERHATIAN: Field ini memiliki format data campuran dalam collection - sebagian berupa string 'DD/MM/YYYY' dan sebagian berupa objek datetime. Untuk aggregation yang akurat, gunakan date parsing pipeline yang dapat menangani kedua format.",
+      "data_issues": {
+        "mixed_formats": true,
+        "string_format": "DD/MM/YYYY",
+        "datetime_format": "ISODate object",
+        "solution": "Use get_date_parsing_pipeline() in collection builders to extract standardized extracted_year and extracted_month fields"
+      }
+    },
+    {
+      "field": "Sales Time",
+      "type": "String",
+      "description": "Waktu penjualan dalam format 'HH:MM:SS'."
+    },
+    {
+      "field": "Customer Name",
+      "type": "String (nullable)",
+      "description": "Nama pelanggan, bisa kosong jika tidak diisi."
+    },
+    {
+      "field": "Customer Phone No",
+      "type": "String (nullable)",
+      "description": "Nomor telepon pelanggan, bisa kosong."
+    },
+    {
+      "field": "No. of Guest",
+      "type": "Int32",
+      "description": "Jumlah tamu. Biasanya 0 untuk pesanan 'Take Away'."
+    },
+    {
+      "field": "Order Type",
+      "type": "String",
+      "description": "Jenis pesanan, misalnya 'Take Away' atau 'Dine-in'."
+    },
+    {
+      "field": "Product Category Name",
+      "type": "String",
+      "description": "Kategori produk yang dijual, contoh: 'Creme Brulee Series'."
+    },
+    {
+      "field": "Product Name",
+      "type": "String",
+      "description": "Nama spesifik dari item produk yang dijual di baris ini."
+    },
+    {
+      "field": "Product qty",
+      "type": "Int32",
+      "description": "Jumlah kuantitas untuk item produk spesifik ini."
+    },
+    {
+      "field": "Modifiers",
+      "type": "String",
+      "description": "Kustomisasi atau pilihan tambahan untuk produk, contoh: '1x Normal Sugar'."
+    },
+    {
+      "field": "Cancelled Quantity",
+      "type": "Int32",
+      "description": "Jumlah item ini yang dibatalkan."
+    },
+    {
+      "field": "Cancel reasons",
+      "type": "Int32",
+      "description": "Kode atau alasan pembatalan item."
+    },
+    {
+      "field": "Cancelled By",
+      "type": "Int32",
+      "description": "ID staf yang melakukan pembatalan."
+    },
+    {
+      "field": "Price",
+      "type": "Int32",
+      "description": "Harga satuan untuk satu buah item produk ini (harga jual sebelum pajak)."
+    },
+    {
+      "field": "Add On Price",
+      "type": "Int32",
+      "description": "Harga untuk tambahan (add-on) pada item ini."
+    },
+    {
+      "field": "Gross Sales",
+      "type": "String (Decimal)",
+      "description": "Nilai penjualan kotor untuk item ini, biasanya dihitung sebagai harga sebelum dikenai pajak (DPP - Dasar Pengenaan Pajak)."
+    },
+    {
+      "field": "Discount",
+      "type": "String (Decimal)",
+      "description": "Nilai diskon yang diaplikasikan pada keseluruhan transaksi. Nilainya terduplikasi di setiap item dalam struk yang sama."
+    },
+    {
+      "field": "Surcharge",
+      "type": "String (Decimal)",
+      "description": "Biaya tambahan yang dikenakan pada keseluruhan transaksi."
+    },
+    {
+      "field": "Net Sales",
+      "type": "String (Decimal)",
+      "description": "Total penjualan bersih untuk KESELURUHAN STRUK (setelah diskon, sebelum pajak). Nilai ini terduplikasi di setiap dokumen item yang termasuk dalam struk yang sama."
+    },
+    {
+      "field": "Service Charge",
+      "type": "Int32",
+      "description": "Biaya layanan yang dikenakan pada keseluruhan transaksi."
+    },
+    {
+      "field": "Service Charge Tax",
+      "type": "Int32",
+      "description": "Pajak yang dikenakan pada biaya layanan."
+    },
+    {
+      "field": "Product Tax",
+      "type": "String (Decimal)",
+      "description": "Nilai pajak yang dihitung hanya untuk SATU ITEM produk di baris ini."
+    },
+    {
+      "field": "Total Tax",
+      "type": "String (Decimal)",
+      "description": "Total keseluruhan pajak untuk KESELURUHAN STRUK. Nilai ini terduplikasi di setiap item dalam struk yang sama."
+    },
+    {
+      "field": "Tax Name",
+      "type": "String",
+      "description": "Nama atau jenis pajak yang diterapkan, contoh: 'PB1' (Pajak Restoran)."
+    },
+    {
+      "field": "Additional Charge Fee",
+      "type": "Int32",
+      "description": "Biaya tambahan lain-lain."
+    },
+    {
+      "field": "Delivery Method",
+      "type": "Int32",
+      "description": "Kode untuk metode pengiriman."
+    },
+    {
+      "field": "Delivery Fee",
+      "type": "Int32",
+      "description": "Biaya pengiriman."
+    },
+    {
+      "field": "Rounding",
+      "type": "Int32",
+      "description": "Nilai pembulatan yang diterapkan pada total akhir tagihan."
+    },
+    {
+      "field": "Total",
+      "type": "String (Decimal)",
+      "description": "Jumlah grand total yang harus dibayar pelanggan untuk KESELURUHAN STRUK. Nilai ini terduplikasi di setiap item dalam struk yang sama."
+    },
+    {
+      "field": "Void Total",
+      "type": "String (Decimal, nullable)",
+      "description": "Total nilai jika keseluruhan transaksi dibatalkan (void)."
+    },
+    {
+      "field": "Promo Name",
+      "type": "String (nullable)",
+      "description": "Nama promosi atau voucher yang digunakan."
+    },
+    {
+      "field": "Promo Subsidized",
+      "type": "Int32",
+      "description": "Bagian dari promo yang disubsidi pihak ketiga."
+    },
+    {
+      "field": "Processing Fee",
+      "type": "Int32",
+      "description": "Biaya pemrosesan pembayaran (misalnya oleh penyedia QRIS/kartu kredit)."
+    },
+    {
+      "field": "Net Received",
+      "type": "String (Decimal)",
+      "description": "Jumlah bersih yang diterima oleh toko setelah dikurangi biaya-biaya."
+    },
+    {
+      "field": "Payment Method",
+      "type": "String",
+      "description": "Metode pembayaran yang digunakan, contoh: 'QRIS', 'Cash'."
+    },
+    {
+      "field": "Payment Note",
+      "type": "Int32",
+      "description": "Kode atau catatan terkait pembayaran."
+    },
+    {
+      "field": "Adjustment Note",
+      "type": "Int32",
+      "description": "Kode atau catatan terkait penyesuaian manual."
+    },
+    {
+      "field": "Device Name",
+      "type": "String",
+      "description": "Nama atau model perangkat Point of Sale (POS) yang digunakan."
+    },
+    {
+      "field": "Preparation Time",
+      "type": "Int32",
+      "description": "Waktu yang dibutuhkan untuk menyiapkan pesanan (dalam detik)."
+    },
+    {
+      "field": "Serving Time",
+      "type": "Int32",
+      "description": "Waktu yang dibutuhkan untuk menyajikan pesanan (dalam detik)."
+    },
+    {
+      "field": "Cashier Name",
+      "type": "String",
+      "description": "Nama kasir yang memproses transaksi."
+    },
+    {
+      "field": "Waiter Name",
+      "type": "Int32",
+      "description": "ID staf pramusaji yang melayani."
+    },
+    {
+      "field": "Status",
+      "type": "String",
+      "description": "Status akhir transaksi, contoh: 'Paid'."
+    },
+    {
+      "field": "Void Date",
+      "type": "String (nullable)",
+      "description": "Tanggal saat transaksi dibatalkan."
+    },
+    {
+      "field": "Void at",
+      "type": "String (nullable)",
+      "description": "Waktu saat transaksi dibatalkan."
+    },
+    {
+      "field": "Void by",
+      "type": "String (nullable)",
+      "description": "Staf yang melakukan pembatalan transaksi."
+    },
+    {
+      "field": "Void notes",
+      "type": "String (nullable)",
+      "description": "Catatan mengenai pembatalan transaksi."
+    },
+    {
+      "field": "month",
+      "type": "Int32 (nullable)",
+      "description": "Field bulan (1-12) yang diekstrak dari Sales Date. PERHATIAN: Field ini kosong/null untuk beberapa records yang memiliki Sales Date dalam format datetime. Gunakan extracted_month dari date parsing pipeline untuk hasil yang konsisten."
+    },
+    {
+      "field": "year", 
+      "type": "Int32 (nullable)",
+      "description": "Field tahun yang diekstrak dari Sales Date. PERHATIAN: Field ini kosong/null untuk beberapa records yang memiliki Sales Date dalam format datetime. Gunakan extracted_year dari date parsing pipeline untuk hasil yang konsisten."
+    }
+  ]
+}
