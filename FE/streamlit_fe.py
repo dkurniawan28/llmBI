@@ -326,13 +326,18 @@ def generate_chart_format_with_mixtral(data, user_query):
         st.error(f"Chart format generation error: {e}")
         return None
 
-def call_aggregation_api(command, use_mixtral=True):
+def call_aggregation_api(command, collection=None, limit=None):
     """Call the MongoDB aggregation API"""
     try:
         payload = {
-            "command": command,
-            "use_mixtral": use_mixtral
+            "command": command
         }
+        
+        # Add optional parameters only if provided
+        if collection:
+            payload["collection"] = collection
+        if limit:
+            payload["limit"] = limit
             
         response = requests.post(
             f"{API_BASE_URL}/aggregate/execute",
