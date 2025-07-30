@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Load environment variables first
+import load_env
+
 from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields, Namespace
 import requests
@@ -57,7 +60,9 @@ error_model = api.model('ErrorResponse', {
 
 class AIService:
     def __init__(self):
-        self.openrouter_api_key = os.getenv('OPENROUTER_API_KEY') or "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"
+        self.openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
+        if not self.openrouter_api_key:
+            raise ValueError("OPENROUTER_API_KEY environment variable is required")
         print(f"🔑 AIService initialized with API key: {self.openrouter_api_key[:15]}...")
         
         self.headers = {

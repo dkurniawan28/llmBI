@@ -1,3 +1,9 @@
+# Load environment variables first
+import sys
+import os
+sys.path.append('..')
+import load_env
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -5,7 +11,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import requests
 import json
-import os
 
 # Set page config
 st.set_page_config(
@@ -209,8 +214,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # API Configuration
-API_BASE_URL = "http://localhost:5002"
-OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY') or "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"
+API_BASE_URL = f"http://localhost:{os.getenv('API_PORT', '5002')}"
+OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
+if not OPENROUTER_API_KEY:
+    st.error("⚠️ OPENROUTER_API_KEY not found in environment variables")
+    st.stop()
 
 def prepare_chart_data(data):
     """Convert nested data structures to chart-friendly format"""

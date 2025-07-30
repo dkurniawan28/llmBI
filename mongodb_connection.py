@@ -1,3 +1,6 @@
+# Load environment variables first
+import load_env
+
 import pymongo
 import paramiko
 from sshtunnel import SSHTunnelForwarder
@@ -5,16 +8,16 @@ import os
 
 class MongoDBSSHConnection:
     def __init__(self):
-        self.ssh_host = '103.93.56.51'
-        self.ssh_port = 22
-        self.ssh_username = 'ubuntu'
-        self.ssh_key_path = '/Users/dedykurniawan/Downloads/pemFile/teh.pem'
+        # Load configuration from environment variables
+        self.ssh_host = os.getenv('MONGO_HOST', '103.93.56.51')
+        self.ssh_port = int(os.getenv('MONGO_PORT', '22'))
+        self.ssh_username = os.getenv('MONGO_USERNAME', 'ubuntu')
+        self.ssh_key_path = os.getenv('MONGO_KEY_PATH', '/Users/dedykurniawan/Downloads/pemFile/teh.pem')
         self.mongo_host = 'localhost'
         self.mongo_port = 27017
-        self.db_name = 'esteh'
+        self.db_name = os.getenv('MONGO_DB_NAME', 'esteh')
         self.tunnel = None
         self.client = None
-        OPENROUTER_API_KEY="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"
     def connect(self):
         try:
             # Create SSH tunnel

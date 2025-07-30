@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Load environment variables first
+import load_env
+
 from mongodb_connection import MongoDBSSHConnection
 import json
 import os
@@ -10,7 +13,9 @@ class OptimizedCollectionBuilder:
     def __init__(self):
         self.mongo_conn = MongoDBSSHConnection()
         self.db = None
-        self.OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY') or "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"
+        self.OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
+        if not self.OPENROUTER_API_KEY:
+            raise ValueError("OPENROUTER_API_KEY environment variable is required")
         
         # Define collection builders
         self.collection_builders = {

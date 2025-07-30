@@ -1,1 +1,56 @@
+# Configuration and cache
 .config/
+
+# Environment variables - KEEP SECURE!
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environments
+.venv
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+*.pid
+server.log
+streamlit.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Sensitive files
+*.pem
+*.key
+api_keys.txt
+credentials.json
+
+# Development and test files
+debug_*.py
+test_*.py
+*_test.py
+temp_*.py
+*_backup.py

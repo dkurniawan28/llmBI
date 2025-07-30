@@ -30,17 +30,29 @@ User Query → Streamlit Frontend → Flask API → Claude (Pipeline Gen) → Mo
 
 ## 🔧 Quick Start
 
-1. **Start the API Server**:
+1. **Setup Environment**:
+   ```bash
+   # Copy environment template
+   cp .env.example .env
+   
+   # Edit .env with your API keys
+   nano .env
+   
+   # Test environment setup
+   python3 test_env.py
+   ```
+
+2. **Start the API Server**:
    ```bash
    python3 api_server.py
    ```
 
-2. **Start the Frontend**:
+3. **Start the Frontend**:
    ```bash
    cd FE && streamlit run streamlit_fe.py --server.port 8501
    ```
 
-3. **Access the Application**:
+4. **Access the Application**:
    - Frontend: http://localhost:8501
    - API Docs: http://localhost:5002/docs
 
