@@ -1,0 +1,57 @@
+{
+  "collection_name": "payment_by_week",
+  "description": "Payment method trends aggregated by week for time-series analysis",
+  "created_by": "create_payment_collections.py",
+  "document_count": 361,
+  "date_range": "2025-04-01 to 2025-06-30",
+  "unique_payment_methods": 47,
+  "schema": {
+    "year": {
+      "type": "int",
+      "description": "ISO week year",
+      "example": 2025
+    },
+    "iso_week": {
+      "type": "int", 
+      "description": "ISO week number (1-53)",
+      "example": 14
+    },
+    "week_label": {
+      "type": "string",
+      "description": "Human readable week label in format YYYY-WXX",
+      "example": "2025-W14"
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "Payment method name (can include combined methods)",
+      "example": "GoFood"
+    },
+    "total_sales": {
+      "type": "double",
+      "description": "Total sales value for this payment method in this week",
+      "example": 32951141117.0
+    },
+    "total_transactions": {
+      "type": "int",
+      "description": "Number of transactions for this payment method in this week",
+      "example": 154567
+    },
+    "avg_transaction": {
+      "type": "double",
+      "description": "Average transaction value for this payment method in this week",
+      "example": 213.45
+    },
+    "start_date": {
+      "type": "date",
+      "description": "First date in this week period",
+      "example": "2025-04-06T00:00:00.000Z"
+    },
+    "end_date": {
+      "type": "date", 
+      "description": "Last date in this week period",
+      "example": "2025-04-06T00:00:00.000Z"
+    }
+  },
+  "usage": "Used by Payment Method Trends chart with weekly interval for date range filtering and time-series visualization",
+  "related_collections": ["payment_by_day", "payment_by_month", "transaction_sales"]
+}

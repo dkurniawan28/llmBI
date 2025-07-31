@@ -1,0 +1,38 @@
+{
+  "collection_name": "sales_by_day",
+  "description": "Daily aggregated sales data for candlestick charts",
+  "sample_document": {
+    "date": "2025-04-15T00:00:00Z",
+    "year": 2025,
+    "month": 4,
+    "day": 15,
+    "day_of_week": 3,
+    "day_of_year": 105,
+    "total_sales": 12345678.0,
+    "total_transactions": 543,
+    "avg_transaction": 22725.0,
+    "min_transaction": 15000.0,
+    "max_transaction": 45000.0,
+    "first_transaction_time": "2025-04-15T08:30:00Z",
+    "last_transaction_time": "2025-04-15T21:45:00Z",
+    "date_string": "2025-04-15",
+    "display_date": "04/15"
+  },
+  "fields": {
+    "date": "date - The specific date",
+    "year": "int - Calendar year",
+    "month": "int - Month (1-12)",
+    "day": "int - Day of month (1-31)",
+    "day_of_week": "int - Day of week (1=Sunday, 7=Saturday)",
+    "day_of_year": "int - Day of year (1-366)",
+    "total_sales": "double - Sum of all sales for the day",
+    "total_transactions": "int - Number of transactions",
+    "avg_transaction": "double - Average transaction value",
+    "min_transaction": "double - Minimum transaction value",
+    "max_transaction": "double - Maximum transaction value",
+    "first_transaction_time": "date - Time of first transaction",
+    "last_transaction_time": "date - Time of last transaction",
+    "date_string": "string - Date in YYYY-MM-DD format",
+    "display_date": "string - Date in MM/DD format for display"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "collection_name": "payment_by_day",
+  "description": "Payment method trends aggregated by day for detailed time-series analysis",
+  "created_by": "create_payment_collections.py", 
+  "document_count": 1654,
+  "date_range": "2025-04-01 to 2025-06-30",
+  "unique_payment_methods": 47,
+  "schema": {
+    "year": {
+      "type": "int",
+      "description": "Year of the transaction date",
+      "example": 2025
+    },
+    "month": {
+      "type": "int",
+      "description": "Month of the transaction date (1-12)", 
+      "example": 4
+    },
+    "day": {
+      "type": "int",
+      "description": "Day of the transaction date (1-31)",
+      "example": 1
+    },
+    "date": {
+      "type": "date",
+      "description": "Date object for filtering and sorting",
+      "example": "2025-04-01T00:00:00.000Z"
+    },
+    "display_date": {
+      "type": "string",
+      "description": "Human readable date in YYYY-MM-DD format",
+      "example": "2025-04-01"
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "Payment method name (can include combined methods)",
+      "example": "Cash"
+    },
+    "total_sales": {
+      "type": "double",
+      "description": "Total sales value for this payment method on this day",
+      "example": 1234567.89
+    },
+    "total_transactions": {
+      "type": "int",
+      "description": "Number of transactions for this payment method on this day", 
+      "example": 30765
+    },
+    "avg_transaction": {
+      "type": "double",
+      "description": "Average transaction value for this payment method on this day",
+      "example": 40.12
+    }
+  },
+  "usage": "Used by Payment Method Trends chart with daily interval for detailed date range filtering and high-resolution time-series visualization",
+  "related_collections": ["payment_by_week", "payment_by_month", "transaction_sales"]
+}

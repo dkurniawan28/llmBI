@@ -1,0 +1,47 @@
+{
+  "collection_name": "payment_by_month",
+  "description": "Payment method trends aggregated by month for high-level time-series analysis",
+  "created_by": "create_payment_collections.py",
+  "document_count": 109,
+  "date_range": "2025-04-01 to 2025-06-30", 
+  "unique_payment_methods": 47,
+  "schema": {
+    "year": {
+      "type": "int",
+      "description": "Year of the transaction date",
+      "example": 2025
+    },
+    "month": {
+      "type": "int",
+      "description": "Month number (1-12)",
+      "example": 4
+    },
+    "month_name": {
+      "type": "string",
+      "description": "Full month name for display",
+      "example": "April"
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "Payment method name (can include combined methods)",
+      "example": "GoFood"
+    },
+    "total_sales": {
+      "type": "double",
+      "description": "Total sales value for this payment method in this month",
+      "example": 98765432.10
+    },
+    "total_transactions": {
+      "type": "int",
+      "description": "Number of transactions for this payment method in this month",
+      "example": 456789
+    },
+    "avg_transaction": {
+      "type": "double",
+      "description": "Average transaction value for this payment method in this month",
+      "example": 216.23
+    }
+  },
+  "usage": "Used by Payment Method Trends chart with monthly interval for broad date range filtering and overview time-series visualization",
+  "related_collections": ["payment_by_week", "payment_by_day", "transaction_sales"]
+}

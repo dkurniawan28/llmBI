@@ -1,0 +1,32 @@
+{
+  "collection_name": "sales_by_week",
+  "description": "Weekly aggregated sales data for candlestick charts",
+  "sample_document": {
+    "year": 2025,
+    "week": 17,
+    "iso_week": 17,
+    "iso_week_year": 2025,
+    "total_sales": 123456789.0,
+    "total_transactions": 5432,
+    "avg_transaction": 22725.0,
+    "min_transaction": 15000.0,
+    "max_transaction": 45000.0,
+    "start_date": "2025-04-21T00:00:00Z",
+    "end_date": "2025-04-27T23:59:59Z",
+    "week_label": "2025-W17"
+  },
+  "fields": {
+    "year": "int - Calendar year",
+    "week": "int - Week number (1-53)",
+    "iso_week": "int - ISO week number",
+    "iso_week_year": "int - ISO week year",
+    "total_sales": "double - Sum of all sales for the week",
+    "total_transactions": "int - Number of transactions",
+    "avg_transaction": "double - Average transaction value",
+    "min_transaction": "double - Minimum transaction value",
+    "max_transaction": "double - Maximum transaction value",
+    "start_date": "date - First day of the week",
+    "end_date": "date - Last day of the week",
+    "week_label": "string - Human readable week label (YYYY-WNN)"
+  }
+}
